@@ -10,6 +10,20 @@ This repository contains the starter code for many different projects. They are 
 * `prove` - Starter projects for each of the prove Developer projects.
 * `foundation` - Starter projects for foundation projects.
 
+## TIPS - Terms and Definitions
+# C#
+- The standard in C# is to use TitleCase for class and method names, and to use _underscoreCamelCase for our member variable names (the underscore to private variables)
+- Class is just a template for something. It only becomes useful when an instance is created and assigned to a variable in your program. An instance is the realization of attributes and methods in the computer's memory
+
+- Class - A new custom data type that defines attributes (member variables) and methods. This is like a blueprint to create instances or objects of that class. Example: A Person has given name and family name.
+
+- Instance - A variable whose data type is the class. We often use the term Object interchangeably. Example: We can have two instances of the Person class: one for John, and one for Mary.
+
+- Instantiate - A verb that means "to create an instance of." Example: We can instantiate the Person class to create a new object.
+
+- Method - A member function. Methods are called using "dot notation" with an instance of the class before the dot. Example: person1.GetEasternName()
+
+
 ## Questions
 # Explain the meaning of Version Control
 - Version control is way to manage files saving his state as a history telling, working this way, provides the possibility to track changes on files.
