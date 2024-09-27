@@ -1,5 +1,7 @@
 using System;
-
+using System.Reflection;
+//Exceed Requirements
+//On the Load method I added an option to see files names already saved before, to choose which of them do you want to open.
 class Program
 {
     protected static List<Journal> _journalContent = [];
@@ -57,8 +59,21 @@ class Program
     private static void ActionLoad()
     {
         try{
-         Console.WriteLine("What is the filename");
+         Console.WriteLine("What is the filename, type 0 if you want to see the files name already saved before. Only .csv or .txt files.");
          string filename = Console.ReadLine();
+
+         if(filename == "0")
+            {
+                var files = Directory.GetFiles(Directory.GetCurrentDirectory());
+                foreach(var selectedFile in files) //select only files with txt in the name
+                {
+                    string fileName = Path.GetFileName(selectedFile);
+                    if(selectedFile.Contains(".txt") || selectedFile.Contains(".csv"))
+                        Console.Write($" {fileName} |");
+                }
+                 Console.WriteLine("\nWhat is the filename do you choose?");
+                 filename = Console.ReadLine();
+            }
         
          _journalContent.Clear();
 
