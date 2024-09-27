@@ -2,8 +2,107 @@ using System;
 
 class Program
 {
+    protected static List<Journal> _journalContent = [];
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop02 World!");
+       
+        var questionList = new Question();
+       
+
+        int option =-1;
+        Console.WriteLine("Please Select One of the following:");
+        
+        while(option !=5){
+            Console.WriteLine("1. Write");
+            Console.WriteLine("2. Display");
+            Console.WriteLine("3. Load");
+            Console.WriteLine("4. Save");
+            Console.WriteLine("5. Quit");
+            Console.Write("What would you like to do? ");
+
+            option = int.Parse(Console.ReadLine());
+
+            switch(option)
+            {
+                 case 1: 
+                    ActionWrite(questionList);
+                    break;
+                case 2:
+                    ActionDisplay();
+                    break;
+                case 3:
+                    ActionLoad();
+                    break;
+                case 4:
+                    ActionSave();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private static void ActionSave()
+    {
+        Console.WriteLine("What is the filename");
+        string filename = Console.ReadLine();
+
+        using (var writer = new StreamWriter(filename)){
+            foreach(var journal in _journalContent){
+                    writer.WriteLine($"{journal.Date}|{journal.Prompt}|{journal.Answer}");
+            }
+       }
+    }
+
+    private static void ActionLoad()
+    {
+        try{
+         Console.WriteLine("What is the filename");
+         string filename = Console.ReadLine();
+        
+         _journalContent.Clear();
+
+         string [] lines = System.IO.File.ReadAllLines(filename);
+         foreach(var line in lines){
+            Journal journal = new Journal();
+            string[] pos = line.Split("|");
+            journal.Date = pos[0];
+            journal.Prompt = pos[1];
+            journal.Answer = pos[2];
+            _journalContent.Add(journal);
+         }
+
+         }catch(Exception ex){
+            Console.WriteLine($"Error: {ex.Message}");
+         }
+    }
+
+    private static void ActionDisplay()
+    {
+        foreach(var ans in _journalContent){
+            Console.WriteLine($"Date: {ans.Date} - Prompt: {ans.Prompt}");
+            Console.WriteLine(ans.Answer + Environment.NewLine);
+        }
+    }
+
+    private static void ActionWrite(Question questionList)
+    {
+       
+        var journalContent = new Journal();
+         string question = GetQuestion(questionList);
+         Console.WriteLine(question);
+         journalContent.Date = DateTime.Now.ToString("dd/MM/yyyy");
+         journalContent.Prompt = question;
+         journalContent.Answer = Console.ReadLine();
+
+         _journalContent.Add(journalContent);
+
+    }
+
+    private static string GetQuestion(Question questionList){
+         var rand = new Random();
+        int indexQuestion = rand.Next(0, questionList.journalQuestions.Count());
+       return questionList.journalQuestions[indexQuestion];
+
     }
 }
