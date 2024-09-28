@@ -1,20 +1,18 @@
 using System;
 using System.Reflection;
 //Exceed Requirements
-//On the Load method I added an option to see files names already saved before, to choose which of them do you want to open.
+//On the Load method I added an option to see files names already saved before, to choose which of them the user does want to open.
 class Program
 {
-    protected static List<Journal> _journalContent = [];
+    protected static Journal _journal = new();
     static void Main(string[] args)
     {
-       
-        var questionList = new Question();
-       
 
-        int option =-1;
+        int option = -1;
         Console.WriteLine("Please Select One of the following:");
-        
-        while(option !=5){
+
+        while (option != 5)
+        {
             Console.WriteLine("1. Write");
             Console.WriteLine("2. Display");
             Console.WriteLine("3. Load");
@@ -24,10 +22,10 @@ class Program
 
             option = int.Parse(Console.ReadLine());
 
-            switch(option)
+            switch (option)
             {
-                 case 1: 
-                    ActionWrite(questionList);
+                case 1:
+                    ActionWrite();
                     break;
                 case 2:
                     ActionDisplay();
@@ -47,77 +45,48 @@ class Program
     private static void ActionSave()
     {
         Console.WriteLine("What is the filename");
-        string filename = Console.ReadLine();
-
-        using (var writer = new StreamWriter(filename)){
-            foreach(var journal in _journalContent){
-                    writer.WriteLine($"{journal.Date}|{journal.Prompt}|{journal.Answer}");
-            }
-       }
+        string fileName = Console.ReadLine();
+        _journal.SaveToFile(fileName);
     }
 
     private static void ActionLoad()
     {
-        try{
-         Console.WriteLine("What is the filename, type 0 if you want to see the files name already saved before. Only .csv or .txt files.");
-         string filename = Console.ReadLine();
+        try
+        {
+            Console.WriteLine("What is the filename, type 0 if you want to see the files name already saved before. Only .csv or .txt files.");
+            string fileName = Console.ReadLine();
 
-         if(filename == "0")
+            if (fileName == "0")
             {
-                var files = Directory.GetFiles(Directory.GetCurrentDirectory());
-                foreach(var selectedFile in files) //select only files with txt in the name
-                {
-                    string fileName = Path.GetFileName(selectedFile);
-                    if(selectedFile.Contains(".txt") || selectedFile.Contains(".csv"))
-                        Console.Write($" {fileName} |");
-                }
-                 Console.WriteLine("\nWhat is the filename do you choose?");
-                 filename = Console.ReadLine();
+                _journal.DisplayCurrentFilesTxtAndCSVinFolder();
+                Console.WriteLine("\nWhat is the filename do you choose?");
+                fileName = Console.ReadLine();
             }
-        
-         _journalContent.Clear();
 
-         string [] lines = System.IO.File.ReadAllLines(filename);
-         foreach(var line in lines){
-            Journal journal = new Journal();
-            string[] pos = line.Split("|");
-            journal.Date = pos[0];
-            journal.Prompt = pos[1];
-            journal.Answer = pos[2];
-            _journalContent.Add(journal);
-         }
+            _journal.LoadFromFile(fileName);
 
-         }catch(Exception ex){
+        }
+        catch (Exception ex)
+        {
             Console.WriteLine($"Error: {ex.Message}");
-         }
+        }
     }
 
     private static void ActionDisplay()
     {
-        foreach(var ans in _journalContent){
-            Console.WriteLine($"Date: {ans.Date} - Prompt: {ans.Prompt}");
-            Console.WriteLine(ans.Answer + Environment.NewLine);
-        }
+        _journal.DisplayAll();
     }
 
-    private static void ActionWrite(Question questionList)
+    private static void ActionWrite()
     {
-       
-        var journalContent = new Journal();
-         string question = GetQuestion(questionList);
-         Console.WriteLine(question);
-         journalContent.Date = DateTime.Now.ToString("dd/MM/yyyy");
-         journalContent.Prompt = question;
-         journalContent.Answer = Console.ReadLine();
+        var journalContent = new JournalContent();
+        string question = Question.GetQuestion();
+        Console.WriteLine(question);
 
-         _journalContent.Add(journalContent);
+        journalContent.Date = DateTime.Now.ToString("dd/MM/yyyy");
+        journalContent.Prompt = question;
+        journalContent.Answer = Console.ReadLine();
 
-    }
-
-    private static string GetQuestion(Question questionList){
-         var rand = new Random();
-        int indexQuestion = rand.Next(0, questionList.journalQuestions.Count());
-       return questionList.journalQuestions[indexQuestion];
-
+        _journal.AddJournalContent(journalContent);
     }
 }
