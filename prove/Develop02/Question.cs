@@ -20,6 +20,5 @@ public static class Question
         var rand = new Random();
         int indexQuestion = rand.Next(0, journalQuestions.Count());
         return journalQuestions[indexQuestion];
-
     }
 }
