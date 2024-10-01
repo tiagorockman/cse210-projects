@@ -25,8 +25,11 @@ This repository contains the starter code for many different projects. They are 
 
 - Method 
     - A member function. Methods are called using "dot notation" with an instance of the class before the dot. Example: person1.GetEasternName()
-
-
+- Encapsulation
+    - As we learned abstraction is the approach of hiding the code implementation details, whith Encapsulation we push this idea further, by preventing other parts of the program to have access to this details.
+    It's critical for 2 mainly reasons
+    If something is broken, any code that has access might be to blame.
+    If something needs to change, any code that has access might need to change.
 
 
 ## Questions
