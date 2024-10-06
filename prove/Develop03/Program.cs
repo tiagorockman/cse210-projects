@@ -1,30 +1,79 @@
-using System;
+using System.Text.Json;
+
+/*
+As additional functionalities  I added a json file to load the scriptures to a List of object.
+Also I added the option to load the scripture randomically
+or to list the Scriptures disposable, to that the user have to choose between 1 and 2 and I have a loop to constraint that.
+Also I have a Constraint when user select from the scripture list.
+*/
 
 class Program
 {
     static void Main(string[] args)
     {
-    //string scriptureText = @"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not and it shall be given him.";
-    string scriptureText = @"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him. But let him ask in faith, nothing wavering. For he that wavereth is like a wave of the sea driven with the wind and tossed.";
+        string option = "";
+        JsonScriptureDTO chosenScripture = new();
+        List<JsonScriptureDTO> jsonScriptureDTOs = LoadScriptures();
 
-    //reference
-     // Reference reference = new Reference("James", 1, 5);
-      Reference reference = new Reference("James", 1, 5,6);
-      Scripture jamesScripture = new Scripture(reference, scriptureText);
-      
-      string option = "";
-      while(option != "quit"){
-        Console.Clear();
-        Console.WriteLine(jamesScripture.GetDisplayText());
-        Console.WriteLine($"{Environment.NewLine} Press enter to continue or 'quit' to finish:");
-        option = Console.ReadLine();
+        do
+        {
+            Console.WriteLine("Type your Choice:");
+            Console.WriteLine("1 - To get a Random Scripture | 2 - To list the options.");
+            option = Console.ReadLine();
+        } while (option != "1" && option != "2");
 
-        if(jamesScripture.IsCompletelyHidden())
-            option = "quit";
+        if (option == "1")
+            chosenScripture = GetRandomScripture(jsonScriptureDTOs);
+        else
+            chosenScripture = DisplayListScriptureAndSelect(jsonScriptureDTOs);
 
-        jamesScripture.HideRandomWords(3);       
-        
+
+        Reference reference = new Reference(chosenScripture.Book, chosenScripture.Chapter, chosenScripture.Verse, chosenScripture.EndVerse);
+        Scripture jamesScripture = new Scripture(reference, chosenScripture.Text);
+
+
+        while (option != "quit")
+        {
+            Console.Clear();
+            Console.WriteLine(jamesScripture.GetDisplayText());
+            Console.WriteLine($"{Environment.NewLine} Press enter to continue or 'quit' to finish:");
+            option = Console.ReadLine();
+
+            if (jamesScripture.IsCompletelyHidden())
+                option = "quit";
+
+            jamesScripture.HideRandomWords(3);
+
+        }
+
     }
-      
+
+    private static JsonScriptureDTO DisplayListScriptureAndSelect(List<JsonScriptureDTO> jsonScriptureDTOs)
+    {
+        int option = 0;
+        Console.Clear();
+        Console.WriteLine("Enter the number of you choice:");
+        for (int i = 1; i <= jsonScriptureDTOs.Count; i++)
+        {
+            Console.WriteLine($"{i} - {jsonScriptureDTOs[i - 1].DisplayReference()}");
+        }
+        do
+        {
+            option = int.Parse(Console.ReadLine());
+        } while (option <= 0 || option > jsonScriptureDTOs.Count);
+        return jsonScriptureDTOs[option - 1];
+    }
+
+    private static JsonScriptureDTO GetRandomScripture(List<JsonScriptureDTO> jsonScriptureDTOs)
+    {
+        Random rand = new Random();
+        int index = rand.Next(jsonScriptureDTOs.Count);
+        return jsonScriptureDTOs[index];
+    }
+
+    private static List<JsonScriptureDTO> LoadScriptures()
+    {
+        string jsonfile = File.ReadAllText("data.json");
+        return JsonSerializer.Deserialize<List<JsonScriptureDTO>>(jsonfile);
     }
 }
