@@ -30,7 +30,13 @@ This repository contains the starter code for many different projects. They are 
     It's critical for 2 mainly reasons
     If something is broken, any code that has access might be to blame.
     If something needs to change, any code that has access might need to change.
+    So it's useful to the isolate functionality and responsibility and also helps in case of errors occours it will provide and support to make investigations easyer. 
 
+Explain the meaning of Encapsulation
+Highlight a benefit of Encapsulation
+Provide an application of Encapsulation
+Use a code example of Encapsulation from the program you wrote
+Thoroughly explain these concepts (this likely cannot be done in less than 100 words)
 
 ## Questions
 - Explain the meaning of Version Control
