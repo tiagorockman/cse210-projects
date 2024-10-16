@@ -31,12 +31,52 @@ This repository contains the starter code for many different projects. They are 
     If something is broken, any code that has access might be to blame.
     If something needs to change, any code that has access might need to change.
     So it's useful to the isolate functionality and responsibility and also helps in case of errors occours it will provide and support to make investigations easyer. 
+- Inheritance
+   Is the mechanism that allows you to create new classes from existing classes. Inheriting properties and methods from the parent class. 
+```cs
+    // a parent class called Person
+    public class Person
+    {
+        private string _name;
 
-Explain the meaning of Encapsulation
-Highlight a benefit of Encapsulation
-Provide an application of Encapsulation
-Use a code example of Encapsulation from the program you wrote
-Thoroughly explain these concepts (this likely cannot be done in less than 100 words)
+        public Person(string name)
+        {
+            _name = name;
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+    }
+
+    // a child class called Student
+    public class Student : Person
+    {
+        private string _number;
+
+        // calling the parent constructor using "base"!
+        public Student(string name, string number) : base(name)
+        {
+        _number = number;
+        }
+
+        public string GetNumber()
+        {
+            return _number;
+        }
+    }
+  //  Note that base is not limited to constructors. We can use it anywhere in the derived class methods, with dot notation, to invoke a behavior in the parent class as the following example shows.
+    string number = base.GetName();
+    Console.WriteLine($"Student Number: {number}");
+    
+  //Member variables and methods that are labeled as protected can be accessed by methods in the class as well as by methods in derived classes, but they cannot be accessed by code outside of these classes.
+```
+# Liskov Substitution Principle
+    The idea of being able to substitute a derived object in place of an inherited type is formally called the Liskov Substitution Principle, named after Barbara Liskov who introduced it at a conference in 1987.
+
+    You might also note that the Liskov Substitution Principle is the "L" of the popular SOLID design principles of object oriented programming.
+
 
 ## Questions
 - Explain the meaning of Version Control
