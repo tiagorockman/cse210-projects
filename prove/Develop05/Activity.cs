@@ -1,18 +1,16 @@
 public class Activity{
-    private string _name;
-    private string _description;
+    protected string _name;
+    protected string _description;
     protected int _duration;
 
     public Activity()
     {
-        _name="Welcome to the Breathing Activity";
-        _description = @"This activity will help you relax by walking your through 
-        breathin in and out slowly. Clear your mind and focus on your breathing";
+       
     }
 
     public void DisplayStartingMessage(){
         Console.Clear();
-        Console.WriteLine(_name+"\n");
+        Console.WriteLine($"Welcome to the {_name}\n");
         Console.WriteLine(_description);
         Console.Write("\nHow long, in seconds, would you like for your session? ");
         _duration = int.Parse(Console.ReadLine());
@@ -20,7 +18,7 @@ public class Activity{
 
     public void DisplayEndingMessage(){
         DisplayWellDone(6);
-        Console.WriteLine($"\nYou have completed another {_duration} seconds of the Breathing Activity");
+        Console.WriteLine($"\nYou have completed another {_duration} seconds of the {_name}");
         ShowSpinner(10);
     }
 

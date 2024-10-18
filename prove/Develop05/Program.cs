@@ -4,13 +4,14 @@ class Program
 {
     static void Main(string[] args)
     {
-       int option = PresentMenu();
-        switch(option){
-            case 1:
-                ExecuteBreathingActivity();
-                break;
-        }
+       PresentMenu();
+    }
 
+    private static void ExecuteReflectingActivity()
+    {
+        var activity = new ReflectingActivity();
+        activity.Run();
+        PresentMenu();
     }
 
     private static void ExecuteBreathingActivity()
@@ -20,7 +21,14 @@ class Program
         PresentMenu();
     }
 
-    private static int PresentMenu()
+     private static void ExecuteListingActivity()
+    {
+         var activity = new ListingActivity();
+        activity.Run();
+        PresentMenu();
+    }
+
+    private static void PresentMenu()
     {
         Console.Clear();
         int option = 0;
@@ -33,7 +41,20 @@ class Program
             Console.WriteLine("Select a choice from menu.");
             option = int.Parse(Console.ReadLine());
         }
-        return option; 
+        
+        switch(option){
+            case 1:
+                ExecuteBreathingActivity();
+                break;
+            case 2:
+                ExecuteReflectingActivity();
+                break;
+            case 3:
+                ExecuteListingActivity();
+                break;
+        }
 
     }
+
+   
 }
