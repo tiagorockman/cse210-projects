@@ -91,4 +91,7 @@ This repository contains the starter code for many different projects. They are 
     - Git status is used to represent the status of the files, and folders in a branch. This command can show you what files are currently being tracked in the actual repository, it shows which files have been staged (represented by green color), changed, or deleted, and also shows files that are not tracked (represented by red color),  or folders that are not tracked if you don't add these files that are untracked to your repository when you commit and push the files to the server, the untracked files will not go up to the Version Control Server. Otherwise, files and folders tracked gonna be sent to the server.
 - What is abstraction and why is it important?
     - Abstraction is the approach of turning complex ideas into simple ones, hiding the implementation details, and showing only the essential information to the user. It's important because with this behavior the code is decoupled and reusable, simplifying the code, and making it more flexible and scalable.
-
+What is a benefit of having a base Activity class, instead of having only the three specific activity classes themselves?
+   - Having a base Activity class is better because you can share the common properties and reuse it by inheritance. Reducing code writing and code decople.
+What is a benefit to requiring parameters for a constructor, instead of simply using the no-argument constructor and letting people use setters later to set the values?
+  - You control the set values internally, and the is more dynamic and decoupled.
