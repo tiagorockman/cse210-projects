@@ -2,6 +2,7 @@ using System;
 
 /* I have added a functionality in the ListingActivity to prevent the same question to appear twice*/
 /* I added a Try Catch Statement to protect the menu and if user type text for example it won't crash the aplication and will show the menu again.*/
+/*The question of the ReflectingActivity I changed to Dictionary<int, List<string>> to get the respective question to the prompt selected*/
 
 class Program
 {

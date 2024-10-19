@@ -54,7 +54,7 @@ public class ListingActivity : Activity{
     }
     public void GetRandomPrompt(){
         Random random =  new Random();
-        int rndValue = random.Next(_prompts.Count);
+        int rndValue = random.Next(0, _prompts.Count);
         Console.WriteLine($" --- {_prompts[rndValue]} ---");
         //prevent the same question appears again.
         _prompts.RemoveAt(rndValue);
