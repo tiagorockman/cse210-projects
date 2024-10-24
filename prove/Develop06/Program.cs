@@ -4,6 +4,24 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop06 World!");
+       int option = Menu.PresentMenu();
+
+        switch (option)
+            {
+                case 1:
+                    ExecuteBreathingActivity();
+                    break;
+                case 2:
+                    ExecuteReflectingActivity();
+                    break;
+                case 3:
+                    ExecuteListingActivity();
+                    break;
+                case 4:
+                    return;
+            }
     }
+
+ 
+
 }
