@@ -1,18 +1,18 @@
+using System.Security.Cryptography;
+
 public class Menu {
-    private int _option;
 
     public Menu()
     {
-        _option = -1;
+    
     }
 
     public static int PresentMenu()
     {
         try
         {
-            Console.Clear();
             int option = 0;
-            while (option <= 0 || option > 4)
+            while (option <= 0 || option > 6)
             {
                 Console.WriteLine("Menu options.");
                 Console.WriteLine("\t1. Create new Goal.");
@@ -30,6 +30,39 @@ public class Menu {
         catch(Exception)
         {
            return PresentMenu();
+        }
+    }
+
+     public static string PresentGoals()
+    {
+        try
+        {
+            Console.Clear();
+            int option = 0;
+            while (option <= 0 || option > 3)
+            {
+                Console.WriteLine("The type of Goals are:");
+                Console.WriteLine("\t1. Simple Goal.");
+                Console.WriteLine("\t2. Eternal Goal.");
+                Console.WriteLine("\t3. Checklist Goal.");
+                Console.WriteLine("Which type of goal do you want to create? ");
+                option = int.Parse(Console.ReadLine());
+            }
+            switch(option){
+                case 1: 
+                    return "SimpleGoal";
+                case 2:
+                    return "EternalGoal";
+                case 3:
+                    return "CheckListGoal";
+                default:
+                    throw new KeyNotFoundException();
+            }
+           
+        }
+        catch(Exception)
+        {
+           return PresentGoals();
         }
     }
 }
